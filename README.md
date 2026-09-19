@@ -69,6 +69,8 @@ pay your own network fee (0.000005 SOL). If anyone else signs, the program rejec
 - **Your wallet is the final check.** Phantom, Solflare and Backpack simulate the transaction
   themselves before you sign, independently of this page. Sign only if the preview shows SOL coming
   in to you and nothing going out except the ~0.000005 SOL fee.
+- **Run it locally.** Download this repository and serve the folder, e.g. with
+  `python3 -m http.server`. You don't have to trust the hosted copy.
 
 ## Safety measures in the page
 
@@ -90,8 +92,6 @@ You don't need to trust them. Don't take anyone's word, this README included. Ch
 balance on Solscan first, read `app.js`, and let your wallet's own preview decide. Nobody running this
 page ever asks for your seed phrase or private key, and nobody asks you for payment up front. If
 someone does, it's a scam.
-- **Run it locally.** Download this repository and serve the folder, e.g. with
-  `python3 -m http.server`. You don't have to trust the hosted copy.
 
 ## License
 
