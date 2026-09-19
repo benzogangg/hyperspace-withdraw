@@ -49,7 +49,7 @@ pay your own network fee (0.000005 SOL). If anyone else signs, the program rejec
 
 ## How to verify this page yourself
 
-- **All the logic is in [`app.js`](app.js)** (about 150 lines). The transaction is built in
+- **All the logic is in [`app.js`](app.js)** (about 165 lines). The transaction is built in
   `withdrawIx()`.
 - **No hidden third-party code.** The page loads only its own files. [`web3.iife.min.js`](web3.iife.min.js)
   is the unmodified `lib/index.iife.min.js` from the official npm package `@solana/web3.js@1.98.0`,
@@ -69,6 +69,20 @@ pay your own network fee (0.000005 SOL). If anyone else signs, the program rejec
 - **Your wallet is the final check.** Phantom, Solflare and Backpack simulate the transaction
   themselves before you sign, independently of this page. Sign only if the preview shows SOL coming
   in to you and nothing going out except the ~0.000005 SOL fee.
+
+## Safety measures in the page
+
+- **One official address:** `https://benzogangg.github.io/hyperspace-withdraw/`. Copies on other domains
+  aren't this project, even if they look the same.
+- **Safety check before signing** (`assertSafe()` in `app.js`). The page refuses to hand your wallet
+  anything other than exactly one Hyperspace `Withdraw` from your own escrow to your own wallet,
+  with you as the fee payer.
+- **Anti-clickjacking** ([`antiframe.js`](antiframe.js)). The page stays blank when another site
+  embeds it in a frame.
+- **Locked network access.** The Content-Security-Policy allows only the page's own files and two
+  public Solana RPCs.
+- **Protected history.** The `main` branch can't be force-pushed or deleted, so every change to
+  the code stays visible in the commit history.
 
 ## If someone sent you this link
 

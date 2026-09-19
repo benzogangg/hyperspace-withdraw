@@ -84,6 +84,20 @@ async function inspect(pk) {
   return { esc, bump, lamports, ok, err: sim.value.err, blockhash, lastValidBlockHeight };
 }
 
+// Last check before the wallet sees the transaction: exactly one Hyperspace Withdraw,
+// from this wallet's own escrow to this same wallet. Anything else is refused.
+function assertSafe(tx, pk) {
+  const [esc] = escrowOf(pk);
+  const ixs = tx.instructions;
+  const k = ixs.length === 1 && ixs[0].keys;
+  const ok = k && ixs[0].programId.equals(HYPER)
+    && DISC.every((b, i) => ixs[0].data[i] === b)
+    && k.length === 8 && k[0].pubkey.equals(pk) && k[1].pubkey.equals(pk) && k[2].pubkey.equals(esc)
+    && k.slice(3).every(x => !x.isSigner)
+    && tx.feePayer.equals(pk);
+  if (!ok) throw new Error("safety check failed, transaction not sent");
+}
+
 function pickProvider() {
   return window.phantom?.solana || window.solflare || window.backpack || window.solana || null;
 }
@@ -113,6 +127,7 @@ $("withdraw").onclick = async () => {
     if (!state.ok) throw new Error("simulation failed: " + JSON.stringify(state.err));
     const tx = new W.Transaction({ feePayer: owner, blockhash: state.blockhash,
       lastValidBlockHeight: state.lastValidBlockHeight }).add(withdrawIx(owner, state.esc, state.bump, state.lamports));
+    assertSafe(tx, owner);
     log("Approve the transaction in your wallet…");
     let sig;
     if (provider.signAndSendTransaction) {
