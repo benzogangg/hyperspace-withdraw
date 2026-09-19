@@ -23,7 +23,7 @@ One instruction, `Withdraw` (discriminator `b712469c946da122` = first 8 bytes of
 | 0 | your wallet | signer |
 | 1 | your wallet | receiver of the SOL |
 | 2 | your escrow = PDA `["hyperspace", auction house, your wallet]` | source |
-| 3 | `FEL1Z3EjUEbET9miT2p3S8qK1K11stCzN5KLaqZZ976d` | fixed account, same in every Withdraw on-chain |
+| 3 | `FEL1Z3EjUEbET9miT2p3S8qK1K11stCzN5KLaqZZ976d` | Hyperspace's auction-house authority (stored in the auction house account data). Read-only, not a signer, receives nothing |
 | 4 | `5pdaXth4ijgDCeYDKgSx3jAbN7m8h4gy1LRCErAAN1LM` | Hyperspace auction house |
 | 5–7 | Token program, System program, Rent sysvar | |
 
@@ -57,8 +57,21 @@ pay your own network fee (0.000005 SOL). If anyone else signs, the program rejec
 - **The page can't send your data anywhere.** A Content-Security-Policy in [`index.html`](index.html) allows
   network requests only to two public Solana RPCs (`solana-rpc.publicnode.com` and
   `api.mainnet-beta.solana.com`). The browser blocks everything else.
-- **Compare with history.** Look up any old Hyperspace withdraw on an explorer, e.g. the program's
-  transactions on Solscan. The instruction data and accounts have the same layout.
+- **Compare with real withdrawals made by other users.** These are ordinary successful Hyperspace
+  withdrawals, not made with this page. They have the same instruction and the same 8 accounts in the
+  same order, only the wallet and escrow differ:
+  - [`qk52YWP8…F9sM`](https://solscan.io/tx/qk52YWP84LqsgJADVRuD4erbTFTvBkrR1oTNih6QbF8vSv9h1SMh3TEvh8B1NKV6tPuGWwhecE8EvgLb5bJF9sM) (2026-09-14)
+  - [`63jbKADR…V4Gx`](https://solscan.io/tx/63jbKADREqyauV8zqrsXQKwJFLCK4GJkFVoPZwrUE1ve3JAj3zcbfreSchjnKuHdrLJT9bditaKoebkVUja1V4Gx) (2026-09-11)
+- **Your wallet is the final check.** Phantom, Solflare and Backpack simulate the transaction
+  themselves before you sign, independently of this page. Sign only if the preview shows SOL coming
+  in to you and nothing going out except the ~0.000005 SOL fee.
+
+## If someone sent you this link
+
+You don't need to trust them. Don't take anyone's word, this README included. Check your escrow
+balance on Solscan first, read `app.js`, and let your wallet's own preview decide. Nobody running this
+page ever asks for your seed phrase or private key, and nobody asks you for payment up front. If
+someone does, it's a scam.
 - **Run it locally.** Download this repository and serve the folder, e.g. with
   `python3 -m http.server`. You don't have to trust the hosted copy.
 

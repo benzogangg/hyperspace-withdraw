@@ -5,7 +5,7 @@
 const W = solanaWeb3;
 const HYPER = new W.PublicKey("HYPERfwdTjyJ2SCaKHmpF2MtrXqWxrsotYDsTrshHWq8"); // Hyperspace program
 const AH    = new W.PublicKey("5pdaXth4ijgDCeYDKgSx3jAbN7m8h4gy1LRCErAAN1LM"); // Hyperspace auction house
-const FEL   = new W.PublicKey("FEL1Z3EjUEbET9miT2p3S8qK1K11stCzN5KLaqZZ976d"); // account used by every Withdraw on-chain
+const FEL   = new W.PublicKey("FEL1Z3EjUEbET9miT2p3S8qK1K11stCzN5KLaqZZ976d"); // auction-house authority; read-only, not a signer
 const TOKEN = new W.PublicKey("TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA");
 const RENT  = new W.PublicKey("SysvarRent111111111111111111111111111111111");
 const DISC  = [0xb7, 0x12, 0x46, 0x9c, 0x94, 0x6d, 0xa1, 0x22];              // sha256("global:withdraw")[0..8]
