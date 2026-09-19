@@ -1,5 +1,9 @@
 # Hyperspace escrow withdraw
 
+**Open the page: https://benzogangg.github.io/hyperspace-withdraw/**
+
+It's served by GitHub Pages straight from this repository, so the page is exactly the code you see here.
+
 A single static page that lets a former **Hyperspace** user withdraw the SOL still sitting in their
 bid escrow. Unofficial and not affiliated with Hyperspace or Tensor.
 
